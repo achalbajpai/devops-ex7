@@ -1,0 +1,15 @@
+---
+- name: Basic Ansible Playbook
+  hosts: web
+  become: yes
+  tasks:
+     - name: Install Apache
+       command: yum install -y httpd
+       args:
+          creates: /usr/sbin/httpd
+
+     - name: Start Apache service
+       command: systemctl start httpd
+
+     - name: Enable Apache service
+       command: systemctl enable httpd
