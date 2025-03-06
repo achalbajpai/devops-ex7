@@ -1,0 +1,26 @@
+---
+- name: Deploy a Simple Website
+  hosts: web
+  become: yes
+  tasks:
+     - name: Install Apache
+       command: yum install -y httpd
+       args:
+          creates: /usr/sbin/httpd
+
+     - name: Start Apache service
+       service:
+          name: httpd
+          state: started
+          enabled: yes
+
+     - name: Copy HTML file to server
+       copy:
+          src: index.html
+          dest: /var/www/html/index.html
+          mode: "0644"
+
+     - name: Restart Apache to apply changes
+       service:
+          name: httpd
+          state: restarted
